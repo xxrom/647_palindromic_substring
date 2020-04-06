@@ -3,44 +3,15 @@ from typing import List
 
 class Solution:
 
-  def checkIfPolindrom(self, checkStr: str, start: int, end: int) -> bool:
-    middle = (end - start) / 2
-    i = 0
-    # print('check %s' % checkStr)
-
-    while i <= middle:
-      # print('%s === %s' % (checkStr[start + i], checkStr[end - i]))
-      if checkStr[start + i] != checkStr[end - i]:
-        return False
-      i += 1
-
-    return True
-
   def countSubstrings(self, s: str) -> int:
-    ans = []
     num = 0
-
-    # print('str %s' % s)
-
-    # print(self.checkIfPolindrom('abba', 0, 3))
-
     arr = [0] * len(s)
     for i in range(len(s)):
       arr[i] = [0] * len(s)
-      # print(arr[i])
-      # for j in range(len(s)):
-      #   arr[i][j] = 'i= %d, j= %d' % (i, j)
 
-    for i in range(len(s)):
-      for j in range(len(s)):
-        print('%s | ' % arr[i][j], end='')
-      print()
-
-    print('____________', len(s))
+    isPalindrom = False
     for i in range(len(s), -1, -1):
       for j in range(i, len(s)):
-        # print(arr[i][j])
-        correct = self.checkIfPolindrom(s, i, j)
         isPalindrom = False
 
         if j == i:
@@ -52,35 +23,25 @@ class Solution:
           #            cabbac
           # If abbac |  10010
           #                ^
-          #                ^
+          #                 \
           # Cabbac   | 100001
           # abba == palindrom =>
           # Cabbac - palindrom if abba - palindrom and
           # first and last Chars are equal!
-          if arr[i + 1][j - 1] == 1 and s[i] == s[j]:
+          if arr[j - 1][i + 1] == 1 and s[i] == s[j]:
             isPalindrom = True
-
-        if isPalindrom != correct:
-          print('WRONG!!!!!!!!', i, j)
 
         if isPalindrom == True:
           num += 1
-          arr[i][j] = 1
-          ans.append(s[i:j + 1])
-        # if self.checkIfPolindrom(s, i, j) == True:
-        #   # print('TRUE = %s' % s[i:j + 1])
-        #   num += 1
-        #
-        # ans.append(s[i:j + 1])
+          # Change j and i for correct array printing
+          arr[j][i] = 1
 
-    for i in range(len(s)):
-      for j in range(len(s)):
-        print('%s | ' % arr[i][j], end='')
-      print()
+    # for i in range(len(s)):
+    #   for j in range(len(s)):
+    #     print('%s | ' % arr[i][j], end='')
+    #   print()
 
-    print('ans', ans)
     return num
-    # return len(ans)
 
 
 my = Solution()
